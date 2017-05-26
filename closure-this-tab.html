@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+
+<style>
+ul{
+	overflow: hidden;
+}
+li{
+	width:30px;
+	height:20px;
+	background:green;
+	float:left;
+	margin:15px;
+}
+.a,.b,.c{
+	width:100px;
+	height: 100px;
+	border:1px solid red;
+	margin:5px;
+	background:red;
+}
+</style>
+
+</head>
+<script></script>
+
+<body>
+<div>
+	<ul id='aUl'>
+		<li>a</li>
+		<li>b</li>
+		<li>c</li>
+	</ul>
+	<div id='show'>
+		<div class='a'>a</div>
+		<div class='b'>b</div>
+		<div class='c'>c</div>	
+	</div>
+
+</div>
+
+</body>
+
+</html>
+<script>
+window.onload=function(){
+	var aShow=document.getElementById("show").getElementsByTagName('div');
+	var aLi=document.getElementById("aUl").getElementsByTagName('li');
+	for (var i = 0; i < aLi.length; i++) {
+		aLi[i].index=i;
+		var oldIndex=-1;
+		aLi[i].onclick=showouter();
+/*测试片段 理解不同位置的this的作用		aLi[i].onclick=confrimT();//赋值表达式 相当于遍历赋值三次 所以 会执行三次confrimT() 所以会输出
+
+		function confrimT(){
+			console.log('赋值的时候执行'+this);//赋值的时候执行[object Window]
+			return function(){
+				console.log(this);//点击的时候执行 输出被点击的对象<li>a</li>
+			}
+		}
+*/
+		function showouter(){
+			return function(){
+				if (oldIndex!=-1){
+					aLi[oldIndex].style.backgroundColor='green';
+					aShow[oldIndex].style.backgroundColor='red';		
+				}
+
+				this.style.backgroundColor='blue';
+				aShow[this.index].style.backgroundColor='blue';
+				//console.log(this);
+
+				oldIndex=this.index;
+			}
+		}
+
+	}
+}
+</script>
